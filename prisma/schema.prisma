@@ -17,10 +17,14 @@ model Task {
   title String
   done  Boolean @default(false)
   tag   Tag[]   @relation("TaskTags")
+
+  @@map("tasks")
 }
 
 model Tag {
   id   String @id @default(uuid())
   name String @unique
   Task Task[] @relation("TaskTags")
+
+  @@map("tags")
 }
