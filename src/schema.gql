@@ -1,0 +1,38 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+input CreateTagInput {
+  name: String!
+}
+
+input CreateTaskInput {
+  tagIds: [ID!]
+  title: String!
+}
+
+type Mutation {
+  createTag(input: CreateTagInput!): Tag!
+  createTask(input: CreateTaskInput!): Task!
+  deleteTask(id: ID!): Boolean!
+  toggleTask(id: ID!): Task!
+}
+
+type Query {
+  tags: [Tag!]!
+  task(id: ID!): Task
+  tasks: [Task!]!
+}
+
+type Tag {
+  id: ID!
+  name: String!
+  tasks: [Task!]
+}
+
+type Task {
+  done: Boolean!
+  id: ID!
+  tags: [Tag!]
+  title: String!
+}

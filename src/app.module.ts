@@ -5,6 +5,8 @@ import { PrismaModule } from "./prisma/prisma.module";
 import { GraphQLModule } from "@nestjs/graphql";
 import { ApolloDriver, ApolloDriverConfig } from "@nestjs/apollo";
 import { join } from "path";
+import { TagModule } from './tag/tag.module';
+import { TaskModule } from './task/task.module';
 
 @Module({
     imports: [
@@ -13,7 +15,9 @@ import { join } from "path";
             autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
             sortSchema: true,
         }),
-        PrismaModule
+        PrismaModule,
+        TagModule,
+        TaskModule
     ],
     controllers: [AppController],
     providers: [AppService],
