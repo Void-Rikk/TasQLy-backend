@@ -11,8 +11,14 @@ export class Task {
     @Field()
     title: string;
 
+    @Field(() => String, { nullable: true })
+    description?: string;
+
     @Field()
-    done: boolean;
+    status: string;
+
+    @Field()
+    priority: string;
 
     @Field(() => [Tag], { nullable: true })
     tags?: Tag[]

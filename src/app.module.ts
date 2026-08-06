@@ -13,6 +13,7 @@ import { TaskModule } from './task/task.module';
             driver: ApolloDriver,
             autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
             sortSchema: true,
+            graphiql: true
         }),
         PrismaModule,
         TagModule,
