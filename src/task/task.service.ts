@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { PrismaService } from "../prisma/prisma.service";
 import { CreateTaskInput } from "./dto/create-task.input";
 
@@ -20,6 +20,8 @@ export class TaskService {
         return this.prisma.task.create({
             data: {
                 title: input.title,
+                description: input.description,
+                priority: input.priority,
                 tag: input.tagIds
                     ? { connect: input.tagIds.map((id) => ({ id })) }
                     : undefined,
@@ -27,11 +29,23 @@ export class TaskService {
         });
     }
 
-    async toggle(id: string) {
+    async advance(id: string) {
         const task = await this.prisma.task.findUniqueOrThrow({ where: { id } });
+        let newStatus: typeof task.status;
+
+        if (task.status === "TO_DO") {
+            newStatus = "IN_PROGRESS";
+        }
+        else if (task.status === "IN_PROGRESS") {
+            newStatus = "DONE";
+        }
+        else {
+            throw new BadRequestException("The task is already in it`s final state");
+        }
+
         return this.prisma.task.update({
             where: { id },
-            data: { done: !task.done }
+            data: { status: newStatus }
         });
     }
 

@@ -7,15 +7,18 @@ input CreateTagInput {
 }
 
 input CreateTaskInput {
+  description: String
+  priority: String!
   tagIds: [ID!]
   title: String!
 }
 
 type Mutation {
+  advanceTask(id: ID!): Task!
   createTag(input: CreateTagInput!): Tag!
   createTask(input: CreateTaskInput!): Task!
+  deleteTag(id: ID!): Boolean!
   deleteTask(id: ID!): Boolean!
-  toggleTask(id: ID!): Task!
 }
 
 type Query {
@@ -31,8 +34,10 @@ type Tag {
 }
 
 type Task {
-  done: Boolean!
+  description: String
   id: ID!
+  priority: String!
+  status: String!
   tags: [Tag!]
   title: String!
 }

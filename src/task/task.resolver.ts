@@ -25,8 +25,8 @@ export class TaskResolver {
     }
 
     @Mutation(() => Task)
-    toggleTask(@Args('id', { type: () => ID }) id: string) {
-        return this.taskService.toggle(id);
+    advanceTask(@Args('id', { type: () => ID }) id: string) {
+        return this.taskService.advance(id);
     }
 
     @Mutation(() => Boolean)
