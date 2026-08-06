@@ -13,10 +13,12 @@ datasource db {
 }
 
 model Task {
-  id    String  @id @default(uuid())
-  title String
-  done  Boolean @default(false)
-  tag   Tag[]   @relation("TaskTags")
+  id          String   @id @default(uuid())
+  title       String
+  description String?
+  status      Status   @default(TO_DO)
+  priority    Priority @default(MEDIUM)
+  tag         Tag[]    @relation("TaskTags")
 
   @@map("tasks")
 }
@@ -27,4 +29,16 @@ model Tag {
   Task Task[] @relation("TaskTags")
 
   @@map("tags")
+}
+
+enum Status {
+  TO_DO       @map("To Do")
+  IN_PROGRESS @map("In Progress")
+  DONE        @map("Done")
+}
+
+enum Priority {
+  LOW
+  MEDIUM
+  HIGH
 }
