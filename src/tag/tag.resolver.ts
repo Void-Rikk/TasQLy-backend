@@ -1,4 +1,4 @@
-import { Args, Mutation, Parent, Query, ResolveField, Resolver } from '@nestjs/graphql';
+import { Args, ID, Mutation, Parent, Query, ResolveField, Resolver } from '@nestjs/graphql';
 import { TagService } from './tag.service';
 import { Tag } from "./tag.model";
 import { CreateTagInput } from "./dto/create-tag.input";
@@ -16,6 +16,11 @@ export class TagResolver {
     @Mutation(() => Tag)
     createTag(@Args('input') input: CreateTagInput) {
         return this.tagService.create(input);
+    }
+
+    @Mutation(() => Boolean)
+    deleteTag(@Args('id', { type: () => ID }) id: string) {
+        return this.tagService.delete(id);
     }
 
     @ResolveField()

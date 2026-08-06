@@ -15,6 +15,11 @@ export class TagService {
         return this.prisma.tag.create({ data: { name: input.name } });
     }
 
+    async delete(id: string) {
+        await this.prisma.tag.delete({ where: { id } });
+        return true;
+    }
+
     getTasks(tagId: string) {
         return this.prisma.tag
             .findUnique({ where: { id: tagId } })
