@@ -13,7 +13,9 @@ async function bootstrap() {
         whitelist: true,
         forbidNonWhitelisted: true
     }));
-    app.useGlobalInterceptors(new DelayInterceptor(1000));
+    if (process.env.NODE_ENV === "dev") {
+        app.useGlobalInterceptors(new DelayInterceptor(1000));
+    }
     app.enableCors();
 
     await app.listen(process.env.PORT ?? 3000);
