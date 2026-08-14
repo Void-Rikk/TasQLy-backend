@@ -30,4 +30,4 @@ COPY --from=builder /app/generated ./generated
 
 EXPOSE 3000
 
-CMD ["node", "dist/src/main"]
+CMD ["sh", "-c", "npx prisma migrate deploy && node dist/src/main"]
