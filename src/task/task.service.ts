@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, InternalServerErrorException } from '@nestjs/common';
 import { PrismaService } from "../prisma/prisma.service";
 import { CreateTaskInput } from "./dto/create-task.input";
 
@@ -16,6 +16,10 @@ export class TaskService {
     }
 
     create(input: CreateTaskInput) {
+
+        if (!input.description) {
+            throw new InternalServerErrorException();
+        }
 
         return this.prisma.task.create({
             data: {

@@ -20,7 +20,8 @@ export class TagResolver {
 
     @Mutation(() => Boolean)
     deleteTag(@Args('id', { type: () => ID }) id: string) {
-        return this.tagService.delete(id);
+        console.log(id);
+        return this.tagService.delete();
     }
 
     @ResolveField()

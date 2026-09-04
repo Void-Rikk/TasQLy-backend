@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { PrismaService } from "../prisma/prisma.service";
 import { CreateTagInput } from "./dto/create-tag.input";
 
@@ -15,9 +15,8 @@ export class TagService {
         return this.prisma.tag.create({ data: { name: input.name } });
     }
 
-    async delete(id: string) {
-        await this.prisma.tag.delete({ where: { id } });
-        return true;
+    async delete() {
+        throw new BadRequestException();
     }
 
     getTasks(tagId: string) {
