@@ -2,6 +2,10 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type AuthPayload {
+  accessToken: String!
+}
+
 input CreateTagInput {
   name: String!
 }
@@ -13,31 +17,55 @@ input CreateTaskInput {
   title: String!
 }
 
+input LoginInput {
+  email: String!
+  password: String!
+}
+
 type Mutation {
   advanceTask(id: ID!): Task!
   createTag(input: CreateTagInput!): Tag!
   createTask(input: CreateTaskInput!): Task!
   deleteTag(id: ID!): Boolean!
   deleteTask(id: ID!): Boolean!
+  login(input: LoginInput!): AuthPayload!
+  logout: Boolean!
+  refresh: AuthPayload!
+  register(input: RegisterInput!): AuthPayload!
 }
 
 type Query {
+  me: User!
   tags: [Tag!]!
   task(id: ID!): Task
   tasks: [Task!]!
 }
 
+input RegisterInput {
+  email: String!
+  name: String!
+  password: String!
+}
+
 type Tag {
   id: ID!
   name: String!
+  ownerId: ID!
   tasks: [Task!]
 }
 
 type Task {
   description: String
   id: ID!
+  ownerId: ID!
   priority: String!
   status: String!
   tags: [Tag!]
   title: String!
+}
+
+type User {
+  email: String!
+  id: ID!
+  name: String!
 }

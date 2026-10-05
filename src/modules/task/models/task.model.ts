@@ -1,5 +1,5 @@
 import { Field, ID, ObjectType } from "@nestjs/graphql";
-import { Tag } from "../tag/tag.model";
+import { Tag } from "../../tag/models/tag.model";
 
 
 @ObjectType()
@@ -19,6 +19,9 @@ export class Task {
 
     @Field()
     priority: string;
+
+    @Field(() => ID)
+    ownerId: string;
 
     @Field(() => [Tag], { nullable: true })
     tags?: Tag[]

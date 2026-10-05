@@ -7,12 +7,17 @@ export class TagService {
 
     constructor(private readonly prisma: PrismaService) {}
 
-    findAll() {
-        return this.prisma.tag.findMany();
+    findAll(ownerId: string) {
+        return this.prisma.tag.findMany({ where: { ownerId } });
     }
 
-    create(input: CreateTagInput) {
-        return this.prisma.tag.create({ data: { name: input.name } });
+    create(input: CreateTagInput, ownerId: string) {
+        return this.prisma.tag.create({
+            data: {
+                name: input.name,
+                ownerId
+            }
+        });
     }
 
     async delete(id: string) {

@@ -1,6 +1,6 @@
 import { Field, ID, InputType } from "@nestjs/graphql";
 import { IsIn, IsOptional, IsString } from "class-validator";
-import { Priority } from "../../../generated/prisma/enums";
+import { Priority } from "../../../../generated/prisma/enums";
 
 
 @InputType()

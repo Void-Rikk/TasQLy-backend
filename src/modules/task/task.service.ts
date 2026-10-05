@@ -7,21 +7,22 @@ export class TaskService {
 
     constructor(private readonly prisma: PrismaService) {}
 
-    findAll() {
-        return this.prisma.task.findMany();
+    findAll(ownerId: string) {
+        return this.prisma.task.findMany({ where: { ownerId } });
     }
 
     findOne(id: string) {
         return this.prisma.task.findUnique({ where: { id } });
     }
 
-    create(input: CreateTaskInput) {
+    create(input: CreateTaskInput, ownerId: string) {
 
         return this.prisma.task.create({
             data: {
                 title: input.title,
                 description: input.description,
                 priority: input.priority,
+                ownerId,
                 tag: input.tagIds
                     ? { connect: input.tagIds.map((id) => ({ id })) }
                     : undefined,
