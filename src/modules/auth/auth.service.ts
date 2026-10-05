@@ -17,7 +17,7 @@ export class AuthService {
      private readonly JWT_ACCESS_TOKEN_TTL: TokenTTL;
      private readonly JWT_REFRESH_TOKEN_TTL: TokenTTL;
 
-     private readonly COOKIE_DOMAIN: string;
+     private readonly COOKIE_DOMAIN?: string;
 
     constructor(
         private readonly userService: UserService,
@@ -26,7 +26,7 @@ export class AuthService {
         this.JWT_ACCESS_TOKEN_TTL = (process.env.JWT_ACCESS_TOKEN_TTL || "2h") as TokenTTL;
         this.JWT_REFRESH_TOKEN_TTL = (process.env.JWT_REFRESH_TOKEN_TTL || "7d") as TokenTTL;
 
-        this.COOKIE_DOMAIN = process.env.COOKIE_DOMAIN || "localhost";
+        this.COOKIE_DOMAIN = process.env.COOKIE_DOMAIN;
     }
 
     async register(res: Response, input: RegisterInput) {
