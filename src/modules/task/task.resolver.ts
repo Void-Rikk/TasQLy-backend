@@ -15,8 +15,11 @@ export class TaskResolver {
     @Query(() => [Task])
     tasks(
         @Authorized("id") ownerId: string,
+        @Args("status", { nullable: true }) status?: "TO_DO" | "IN_PROGRESS" | "DONE"
     ) {
-        return this.taskService.findAll(ownerId);
+        return this.taskService.findAll(ownerId, {
+            status
+        });
     }
 
     @Authorization()

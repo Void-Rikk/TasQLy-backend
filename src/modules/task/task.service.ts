@@ -1,14 +1,20 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { PrismaService } from "../prisma/prisma.service";
 import { CreateTaskInput } from "./dto/create-task.input";
+import { TaskFiltersDto } from "./dto/task-filters.dto";
 
 @Injectable()
 export class TaskService {
 
     constructor(private readonly prisma: PrismaService) {}
 
-    findAll(ownerId: string) {
-        return this.prisma.task.findMany({ where: { ownerId } });
+    findAll(ownerId: string, filters: TaskFiltersDto) {
+        return this.prisma.task.findMany({
+            where: {
+                ownerId,
+                status: filters.status
+            }
+        });
     }
 
     findOne(id: string) {

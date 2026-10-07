@@ -38,7 +38,7 @@ type Query {
   me: User!
   tags: [Tag!]!
   task(id: ID!): Task
-  tasks: [Task!]!
+  tasks(status: String): [Task!]!
 }
 
 input RegisterInput {
