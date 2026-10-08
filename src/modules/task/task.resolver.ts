@@ -15,16 +15,20 @@ export class TaskResolver {
     @Query(() => [Task])
     tasks(
         @Authorized("id") ownerId: string,
-        @Args("status", { nullable: true }) status?: "TO_DO" | "IN_PROGRESS" | "DONE"
+        @Args("status", { nullable: true }) status?: "TO_DO" | "IN_PROGRESS" | "DONE",
+        @Args("searchQuery", { nullable: true }) searchQuery?: string
     ) {
         return this.taskService.findAll(ownerId, {
-            status
+            status,
+            searchQuery,
         });
     }
 
     @Authorization()
     @Query(() => Task, { nullable: true })
-    task(@Args('id', { type: () => ID }) id: string) {
+    task(
+        @Args('id', { type: () => ID }) id: string
+    ) {
         return this.taskService.findOne(id);
     }
 
@@ -39,19 +43,25 @@ export class TaskResolver {
 
     @Authorization()
     @Mutation(() => Task)
-    advanceTask(@Args('id', { type: () => ID }) id: string) {
+    advanceTask(
+        @Args('id', { type: () => ID }) id: string
+    ) {
         return this.taskService.advance(id);
     }
 
     @Authorization()
     @Mutation(() => Boolean)
-    deleteTask(@Args('id', { type: () => ID }) id: string) {
+    deleteTask(
+        @Args('id', { type: () => ID }) id: string
+    ) {
         return this.taskService.delete(id);
     }
 
     @Authorization()
     @ResolveField(() => [Tag])
-    tags(@Parent() task: Task) {
+    tags(
+        @Parent() task: Task
+    ) {
         return this.taskService.getTags(task.id);
     }
 }

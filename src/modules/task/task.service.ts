@@ -9,11 +9,16 @@ export class TaskService {
     constructor(private readonly prisma: PrismaService) {}
 
     findAll(ownerId: string, filters: TaskFiltersDto) {
+        const { status, searchQuery } = filters;
+
         return this.prisma.task.findMany({
             where: {
                 ownerId,
-                status: filters.status
-            }
+                status: status,
+                title: searchQuery
+                    ? { contains: searchQuery, mode: 'insensitive' }
+                    : undefined,
+            },
         });
     }
 
