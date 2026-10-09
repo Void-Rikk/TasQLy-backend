@@ -1,4 +1,4 @@
-import { IsIn, IsOptional, IsString } from "class-validator";
+import { IsArray, IsIn, IsOptional, IsString } from "class-validator";
 
 
 export class TaskFiltersDto {
@@ -11,4 +11,8 @@ export class TaskFiltersDto {
     @IsOptional()
     @IsString()
     searchQuery?: string;
+
+    @IsOptional()
+    @IsArray()
+    tagIds?: string[];
 }

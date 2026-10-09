@@ -9,7 +9,7 @@ export class TaskService {
     constructor(private readonly prisma: PrismaService) {}
 
     findAll(ownerId: string, filters: TaskFiltersDto) {
-        const { status, searchQuery } = filters;
+        const { status, searchQuery, tagIds } = filters;
 
         return this.prisma.task.findMany({
             where: {
@@ -17,6 +17,9 @@ export class TaskService {
                 status: status,
                 title: searchQuery
                     ? { contains: searchQuery, mode: 'insensitive' }
+                    : undefined,
+                AND: tagIds?.length
+                    ? tagIds.map((id) => ({ tag: { some: { id } } }))
                     : undefined,
             },
         });

@@ -16,11 +16,13 @@ export class TaskResolver {
     tasks(
         @Authorized("id") ownerId: string,
         @Args("status", { nullable: true }) status?: "TO_DO" | "IN_PROGRESS" | "DONE",
-        @Args("searchQuery", { nullable: true }) searchQuery?: string
+        @Args("searchQuery", { nullable: true }) searchQuery?: string,
+        @Args("tagIds", { nullable: true, type: () => [ID] }) tagIds?: string[],
     ) {
         return this.taskService.findAll(ownerId, {
             status,
             searchQuery,
+            tagIds
         });
     }
 
